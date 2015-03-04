@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.1.0">
+	<OCD name='ocd' id='ocd'>
+		<AD id='org.osgi.service.http.port' type='Integer' cardinality='0' required='false' default='8080' />
+		<AD id='org.osgi.service.http.port.secure' type='Integer' cardinality='0' required='false' default='8443' />
+		<AD id='org.apache.felix.http.debug' type='Boolean' cardinality='0' required='false' default='true' />
+		<AD id="org.apache.felix.http.timeout" type="Integer" cardinality='0' required='false' default='60000' />
+		<AD id='org.apache.felix.http.enable' type='Boolean' cardinality='0' />
+		<AD id='org.apache.felix.https.enable' type='Boolean' cardinality='0' />
+		<AD id='org.apache.felix.https.keystore' type='String' cardinality='0' required='false' />
+		<AD id='org.apache.felix.https.keystore.password' type='String' cardinality='0' required='false' />
+        <AD id='org.apache.felix.https.truststore' type='String' cardinality='0' required='false' />
+        <AD id='org.apache.felix.https.truststore.password' type='String' cardinality='0' required='false' />
+		<AD id='org.apache.felix.https.clientcertificate' type='String' cardinality='0' required='true' />
+	</OCD>
+	<Designate pid='org.apache.felix.http' bundle="osgi-dp:org.apache.felix.http.jetty">
+		<Object ocdref='ocd'>
+            <Attribute adref='org.apache.felix.http.enable'>
+                <Value><![CDATA[false]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.enable'>
+                <Value><![CDATA[true]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.truststore'>
+                <Value><![CDATA[sslcert/certs/root_ca.jks]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.truststore.password'>
+                <Value><![CDATA[secret]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.keystore'>
+                <Value><![CDATA[sslcert/certs/server.jks]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.keystore.password'>
+                <Value><![CDATA[secret]]></Value>
+            </Attribute>
+            <Attribute adref='org.apache.felix.https.clientcertificate'>
+                <Value><![CDATA[none]]></Value>
+            </Attribute>
+		</Object>
+	</Designate>
+</MetaData>
