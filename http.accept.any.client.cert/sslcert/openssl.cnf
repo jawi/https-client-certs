@@ -1,0 +1,93 @@
+#
+# OpenSSL configuration file.
+#
+
+[ ca ]
+default_ca              = CA_default
+
+[ CA_default ]
+new_certs_dir           = ${ENV::ISSUED_CERTS_DIR}
+serial                  = $new_certs_dir/serial
+database                = $new_certs_dir/certindex.txt
+certificate             = ${ENV::CERTS_DIR}/${ENV::CA_NAME}.pem
+private_key             = ${ENV::PRIVKEY_DIR}/${ENV::CA_NAME}.pem
+default_days            = 365
+default_md              = sha512
+preserve                = no
+email_in_dn             = no
+copy_extensions         = copy
+nameopt                 = default_ca
+certopt                 = default_ca
+policy                  = policy_match
+
+[ policy_match ]
+countryName             = optional
+stateOrProvinceName     = optional
+organizationName        = match
+organizationalUnitName  = optional
+emailAddress            = optional
+commonName              = supplied
+
+[ req ]
+default_bits            = 4096
+default_md              = sha512
+default_keyfile         = ${ENV::PRIVKEY_DIR}/${ENV::NAME}.pem
+string_mask             = nombstr
+distinguished_name      = req_distinguished_name
+x509_extensions         = v3_ca
+req_extensions          = v3_req
+
+[ req_distinguished_name ]
+# Variable name             Prompt string
+#-------------------------    ----------------------------------
+0.organizationName      = Organization Name (company)
+organizationalUnitName  = Organizational Unit Name (department, division)
+localityName            = Locality Name (city, district)
+stateOrProvinceName     = State or Province Name (full name)
+countryName             = Country Name (2 letter code)
+countryName_min         = 2
+countryName_max         = 2
+commonName              = Common Name (hostname, IP, or your name)
+commonName_max          = 64
+
+# Default values for the above, for consistency and less typing.
+# Variable name             Value
+#------------------------     ------------------------------
+0.organizationName_default  = L\'Xtreme IT consultancy
+organizationalUnitName_default = R&D
+localityName_default        = Amersfoort
+stateOrProvinceName_default = Utrecht
+countryName_default         = NL
+
+# Used for CA certificates
+[ v3_ca ]
+basicConstraints            = critical, CA:TRUE, pathlen:0
+subjectKeyIdentifier        = hash
+authorityKeyIdentifier      = keyid:always,issuer:always
+keyUsage                    = keyCertSign, cRLSign
+nsCertType                  = sslCA, objCA
+nsComment                   = "Certificate Authoritity certificate"
+
+# Used for signing requests
+[ v3_req ]
+basicConstraints            = CA:FALSE
+subjectKeyIdentifier        = hash
+keyUsage                    = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement
+subjectAltName              = @alt_names
+
+# Used for server-side signing requests
+[ server ]
+extendedKeyUsage            = critical, serverAuth, nsSGC, msSGC
+nsCertType                  = server, objsign
+nsComment                   = "Server certificate"
+
+# Used for client-side signing requests
+[ client ]
+extendedKeyUsage            = critical, clientAuth
+nsCertType                  = client, objsign
+nsComment                   = "Client certificate"
+
+[ alt_names ]
+DNS.1   = ${ENV::NAME}
+DNS.2   = ${ENV::NAME}.localhost
+
