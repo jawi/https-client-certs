@@ -1,11 +1,13 @@
 javac.source: 1.7
 javac.target: 1.7
+
 -buildpath:  \
 	osgi.core;version=5.0,\
 	osgi.cmpn;version=5.0,\
 	org.apache.felix.http.servlet-api;version=1.0,\
 	org.apache.felix.dependencymanager;version=3.1,\
 	org.apache.felix.http.jetty;version=3.0
+
 Bundle-Version: 1.0.0
 Private-Package:  \
 	http.client.cert
