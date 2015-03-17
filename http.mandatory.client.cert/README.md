@@ -1,4 +1,4 @@
-# http.client.certs
+# http.mandatory.client.cert
 
 Small PoC showing the use of a separate HTTPS connector for enforcing the use of client
 certificates.

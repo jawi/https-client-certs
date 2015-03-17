@@ -17,4 +17,4 @@
     org.apache.felix.http.whiteboard,\
     org.apache.felix.log,\
     org.apache.felix.metatype,\
-    http.client.certs
+    http.mandatory.client.cert
